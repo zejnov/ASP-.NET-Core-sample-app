@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using MyBusinessApp.Service;
+using MyBusinessApp.Service.Impl;
+using MyDataApp.Model;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<IPersonService, PersonService>();
+
+var connectionString = "Server=localhost;Database=mywebapp;user id=user;Password=password";
+builder.Services.AddDbContext<MyDbContext>(x => x.UseNpgsql(connectionString));
 
 var app = builder.Build();
 
@@ -15,8 +24,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
-app.UseRouting();
 
 app.UseAuthorization();
 

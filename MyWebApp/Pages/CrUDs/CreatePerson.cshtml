@@ -1,0 +1,21 @@
+﻿@page
+@model CreatePerson
+
+@{
+    ViewData["Title"] = "Add Person";
+}
+
+<div>
+    <p>Enter a person data:</p>
+    
+    <form method="post">
+        First Name:
+        <input asp-for="Person!.FirstName" /><br>
+        Last Name:
+        <input asp-for="Person!.LastName" /><br>
+        Description:
+        <input asp-for="Person!.Description" /><br>
+        <input type="submit" />
+    </form>
+    
+</div>

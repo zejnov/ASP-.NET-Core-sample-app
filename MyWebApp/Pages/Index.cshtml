@@ -1,10 +1,32 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Explore";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <table class="arrowes-table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Description</th>
+                <th>Emails</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var person in Model.People)
+            {
+                <tr>
+                    <td>@person.Id</td>
+                    <td>@person.FirstName</td>
+                    <td>@person.LastName</td>
+                    <td>@person.Description</td>
+                    <td>@person.Emails.MinBy(e => e.Id)?.Address</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
