@@ -20,7 +20,7 @@ public class CreatePerson : PageModel
     }
     
     [BindProperty]
-    public PersonView? Person { get; set; }
+    public PersonView? PersonView { get; set; }
 
     public async Task<IActionResult> OnPostAsync()
     {
@@ -29,8 +29,8 @@ public class CreatePerson : PageModel
             return Page();
         }
 
-        await _personService.CreateAsync(Person!);
+        await _personService.CreateAsync(PersonView!);
         
-        return RedirectToPage("./Index");
+        return RedirectToPage("./../Index");
     }
 }

@@ -21,14 +21,14 @@ public class PersonService : IPersonService
             .ToList();
     }
 
-    public Person GetById(int personId, bool withIncludes = false)
+    public async Task<Person> GetById(int personId, bool withIncludes = false)
     {
         var personsQuery = _dbContext.Persons;
 
         if (withIncludes)
             personsQuery.Include(p => p.Emails);
 
-        return personsQuery.FirstOrDefault(p => p.Id == personId) ??
+        return await personsQuery.FirstOrDefaultAsync(p => p.Id == personId) ??
                throw new ObjectNotFoundException();
     }
 
@@ -45,18 +45,19 @@ public class PersonService : IPersonService
         return person;
     }
 
-    public Person Update(int personId, Person updatedPerson)
+    public async Task<Person> Update(int personId, Person updatedPerson)
     {
-        var dbPerson = GetById(personId);
+        var dbPerson = await GetById(personId);
         dbPerson.FirstName = updatedPerson.FirstName;
         dbPerson.LastName = updatedPerson.LastName;
         dbPerson.Description = updatedPerson.Description;
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
         return dbPerson;
     }
 
-    public void Delete(int personId)
+    public async Task Delete(int personId)
     {
-        _dbContext.Persons.Remove(GetById(personId));
+        _dbContext.Persons.Remove(await GetById(personId));
+        await _dbContext.SaveChangesAsync();
     }
 }

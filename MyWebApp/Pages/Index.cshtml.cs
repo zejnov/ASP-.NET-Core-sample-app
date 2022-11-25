@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyBusinessApp.Service;
 using MyDataApp.Model;
 
@@ -20,5 +21,11 @@ public class IndexModel : PageModel
     public void OnGet()
     {
         People = _personService.GetAll();
+    }
+    
+    public async Task<IActionResult> OnPostDeleteAsync(int id)
+    {
+        await _personService.Delete(id);
+        return RedirectToPage();
     }
 }
