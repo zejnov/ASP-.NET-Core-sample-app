@@ -45,7 +45,7 @@ public class PersonService : IPersonService
         return person;
     }
 
-    public async Task<Person> Update(int personId, Person updatedPerson)
+    public async Task<Person> Update(int personId, PersonView updatedPerson)
     {
         var dbPerson = await GetById(personId);
         dbPerson.FirstName = updatedPerson.FirstName;

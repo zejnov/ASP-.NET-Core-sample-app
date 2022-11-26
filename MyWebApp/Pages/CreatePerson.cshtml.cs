@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyBusinessApp.Service;
 using MyBusinessApp.View;
 
-namespace MyWebApp.Pages.CrUDs;
+namespace MyWebApp.Pages;
 
 public class CreatePerson : PageModel
 {
@@ -31,6 +31,6 @@ public class CreatePerson : PageModel
 
         await _personService.CreateAsync(PersonView!);
         
-        return RedirectToPage("./../Index");
+        return RedirectToPage("./Index");
     }
 }
