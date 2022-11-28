@@ -1,0 +1,17 @@
+﻿@page "{id:int}"
+@model MyWebApp.Pages.CreateEmail
+
+@{
+    ViewData["Title"] = "Add Person email";
+}
+
+<div>
+    <p>Enter a person data:</p>
+    
+    <form method="post">
+        Email address:
+        <input asp-for="EmailView!.Address" /><br>
+        <input type="submit" />
+    </form>
+    
+</div>

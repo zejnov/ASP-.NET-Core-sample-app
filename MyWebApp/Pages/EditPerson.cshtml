@@ -1,0 +1,60 @@
+﻿@page "{id:int}"
+@model EditPerson
+
+@{
+    ViewData["Title"] = "Edit person";
+}
+
+<h4>Edit Person data</h4>
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PersonView!.FirstName" class="control-label"></label>
+                <input asp-for="PersonView!.FirstName" class="form-control"/>
+                <label asp-for="PersonView!.LastName" class="control-label"></label>
+                <input asp-for="PersonView!.LastName" class="form-control"/>
+                <label asp-for="PersonView!.Description" class="control-label"></label>
+                <input asp-for="PersonView!.Description" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+<h4>Person emails</h4>
+<a asp-page="./CreateEmail" asp-route-id="PersonView!.Id">Add Email</a>
+<div class="row">
+    <table class="arrowes-table table-striped">
+        <thead>
+        <tr>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var email in Model.Emails)
+        {
+
+            <tr>
+                <td>@email.Address</td>
+                <td>
+
+                    <a asp-page="./EditEmail" asp-route-id="@email.Id">Edit</a>
+                    <button type="submit" asp-page-handler="delete" asp-route-id="@email.Id">delete</button>
+
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

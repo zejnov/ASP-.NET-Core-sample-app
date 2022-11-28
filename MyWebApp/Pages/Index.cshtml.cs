@@ -25,7 +25,7 @@ public class IndexModel : PageModel
     
     public async Task<IActionResult> OnPostDeleteAsync(int id)
     {
-        await _personService.Delete(id);
+        await _personService.DeleteAsync(id);
         return RedirectToPage();
     }
 }

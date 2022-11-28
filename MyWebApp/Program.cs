@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 var connectionString = "Server=localhost;Database=mywebapp;user id=user;Password=password";
 builder.Services.AddDbContext<MyDbContext>(x => x.UseNpgsql(connectionString));

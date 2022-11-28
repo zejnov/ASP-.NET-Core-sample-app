@@ -27,9 +27,8 @@
                 <td>@person.Description</td>
                 <td>@person.Emails.MinBy(e => e.Id)?.Address</td>
                 <td>
-                    <a asp-page="./AddEmail" asp-route-id="@person.Id">Add Email</a>
-                    <a asp-page="./EditPerson" asp-route-id="@person.Id">Edit</a>
-                    <button type="submit" asp-page-handler="delete" asp-route-id="@person.Id">delete</button>
+                    <a asp-page="./EditPerson" asp-route-id="@person.Id">Details</a>
+                    <button type="submit" asp-page-handler="delete" asp-route-id="@person.Id">Delete</button>
 
                 </td>
             </tr>
