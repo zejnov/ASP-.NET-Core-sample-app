@@ -1,4 +1,6 @@
-﻿using MyBusinessApp.Exception;
+﻿using Microsoft.EntityFrameworkCore;
+using MyBusinessApp.Exception;
+using MyBusinessApp.View;
 using MyDataApp.Model;
 
 namespace MyBusinessApp.Service.Impl;
@@ -12,28 +14,33 @@ public class EmailService : IEmailService
         _dbContext = dbContext;
     }
 
-    public Email Create(Email email)
+    public async Task<Email> GetByIdAsync(int emailId) =>
+        await _dbContext.Emails.FirstOrDefaultAsync(e => e.Id == emailId) ??
+        throw new ObjectNotFoundException();
+
+    public async Task<Email> CreateAsync(EmailView? emailView)
     {
+        var email = new Email()
+        {
+            Address = emailView.Address,
+            PersonId = emailView.PersonId
+        };
         _dbContext.Add(email);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
         return email;
     }
 
-    public Email Update(int emailId, Email updatedEmail)
+    public async Task<Email> UpdateAsync(int emailId, EmailView? updatedEmail)
     {
-        Email dbEmail = GetById(emailId);
+        var dbEmail = await GetByIdAsync(emailId);
         dbEmail.Address = updatedEmail.Address;
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
         return dbEmail;
     }
-    
-    public void Delete (int emailId)
-    {
-        _dbContext.Remove(GetById(emailId));
-        _dbContext.SaveChanges();
-    }
 
-    private Email GetById(int emailId) =>
-        _dbContext.Emails.FirstOrDefault(e => e.Id == emailId) ??
-        throw new ObjectNotFoundException();
+    public async Task DeleteAsync(int emailId)
+    {
+        _dbContext.Remove(GetByIdAsync(emailId));
+        await _dbContext.SaveChangesAsync();
+    }
 }

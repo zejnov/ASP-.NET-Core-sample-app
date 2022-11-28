@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using MyBusinessApp.Exception;
 using MyBusinessApp.View;
 using MyDataApp.Model;
@@ -21,14 +22,11 @@ public class PersonService : IPersonService
             .ToList();
     }
 
-    public async Task<Person> GetById(int personId, bool withIncludes = false)
+    public async Task<Person> GetByIdAsync(int personId)
     {
-        var personsQuery = _dbContext.Persons;
-
-        if (withIncludes)
-            personsQuery.Include(p => p.Emails);
-
-        return await personsQuery.FirstOrDefaultAsync(p => p.Id == personId) ??
+        return await _dbContext.Persons
+                   .Include(p => p.Emails)
+                   .FirstOrDefaultAsync(p => p.Id == personId) ??
                throw new ObjectNotFoundException();
     }
 
@@ -45,9 +43,9 @@ public class PersonService : IPersonService
         return person;
     }
 
-    public async Task<Person> Update(int personId, PersonView updatedPerson)
+    public async Task<Person> UpdateAsync(int personId, PersonView updatedPerson)
     {
-        var dbPerson = await GetById(personId);
+        var dbPerson = await GetByIdAsync(personId);
         dbPerson.FirstName = updatedPerson.FirstName;
         dbPerson.LastName = updatedPerson.LastName;
         dbPerson.Description = updatedPerson.Description;
@@ -55,9 +53,9 @@ public class PersonService : IPersonService
         return dbPerson;
     }
 
-    public async Task Delete(int personId)
+    public async Task DeleteAsync(int personId)
     {
-        _dbContext.Persons.Remove(await GetById(personId));
+        _dbContext.Persons.Remove(await GetByIdAsync(personId));
         await _dbContext.SaveChangesAsync();
     }
 }

@@ -6,8 +6,8 @@ namespace MyBusinessApp.Service;
 public interface IPersonService
 {
     List<Person> GetAll();
-    Task<Person> GetById(int personId, bool withIncludes = false);
+    Task<Person> GetByIdAsync(int personId);
     Task<Person> CreateAsync(PersonView person);
-    Task<Person> Update(int personId, PersonView updatedPerson);
-    Task Delete(int personId);
+    Task<Person> UpdateAsync(int personId, PersonView updatedPerson);
+    Task DeleteAsync(int personId);
 }

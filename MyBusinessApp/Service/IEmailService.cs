@@ -1,10 +1,12 @@
-﻿using MyDataApp.Model;
+﻿using MyBusinessApp.View;
+using MyDataApp.Model;
 
 namespace MyBusinessApp.Service;
 
 public interface IEmailService
 {
-    Email Create(Email email);
-    Email Update(int emailId, Email updatedEmail);
-    void Delete(int emailId);
+    Task<Email> GetByIdAsync(int emailId);
+    Task<Email> CreateAsync(EmailView? emailView);
+    Task<Email> UpdateAsync(int emailId, EmailView? updatedEmail);
+    Task DeleteAsync(int emailId);
 }
